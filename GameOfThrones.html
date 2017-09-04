@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Game Of Thrones</title>
+        <meta charset="UTF-8">
+        <link href="GameOfThrones.css" rel="stylesheet">
+        <script type="text/javascript" src= "http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function(){
+                $(document).on("click", "img", function(){
+
+                    var id = $(this).attr("id");
+                    var houseNo;
+                    if (id === "stark")  {
+                        houseNo = 362;
+                    }
+                    else if (id === "targaryen")  {
+                        houseNo = 378;
+                    }
+                    if (id === "lannister")  {
+                        houseNo = 229;
+                    }
+                    if (id === "baratheon")  {
+                        houseNo = 17;
+                    }
+                    var url = 'https://www.anapioficeandfire.com/api/houses/' + houseNo;
+                    // console.log(url);
+                    $.get(url, function(res) {
+                        console.log(res);
+                        HTMLstring = '<h3>Name: ' + res.name + '</h3>';
+                        HTMLstring += '<h3>Words: ';
+                        HTMLstring += res.words;
+                        HTMLstring += '</h3>';
+                        HTMLstring += '<h3></h3>'
+                        HTMLstring += '<h3>Titles: ';
+                        for (var i = 0; i < res.titles.length; i++){
+                            HTMLstring += res.titles[i];
+                            HTMLstring += ', ';
+                        }
+                        HTMLstring += '</h3>';
+
+                        $("#info").html(HTMLstring);
+                    }, 'json');
+                });
+            });
+        </script>
+    </head>
+    <body>
+        <div id="header">
+            <h1>Game Of Thrones</h1>
+        </div>
+        <div id="displayArea">
+            <div id="images">
+                <img id="stark" src='./images/stark.jpg' alt='House of Stark'>
+                <img id="targaryen" src='./images/targaryen.jpg' alt='House of Targaryen'>
+                <img id="lannister" src='./images/lannister.jpg' alt='House of Lannister'>
+                <img id="baratheon" src='./images/baratheon.png' alt='House of Baratheon'>
+            </div>
+            <h2>House Details</h2>
+            <div id="info">
+            </div>
+        </div>
+        <div id="footer">
+
+        </div>
+    </body>
+</html>
